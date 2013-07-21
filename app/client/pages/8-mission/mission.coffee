@@ -47,31 +47,13 @@ playMissionResult = (elParent, totalPoint, starList) ->
 		fontColor : "#000000"
 		).addTo(layer).text(0)
 
-	(collie.Timer.cycle ( (oEvent) ->
-		console.log "value : #{oEvent.value}"
+	# collie.Timer.repeat(((oEvent) -> console.log oEvent), 1000, {loop: 1})
 
-		starResult = starList[oEvent.value]
+	repeatArray = (duration, array, func) ->
+		collie.Timer.repeat ((oEvent) -> func array[oEvent.count - 1]), duration, {loop: array.length}
 
-		starIcon =  new collie.DisplayObject(
-			x : "center"
-			y : "bottom"
-			velocityY : -50
-			backgroundImage: "icon"
-			).addTo(layer)
-
-		pointText = new collie.Text(
-			x : 50
-			y : 50
-			fontSize : 30
-			fontColor : ["red", "black", "blue"][starResult.state]
-			).addTo(starIcon).text(starResult.point)
-
-		oCurText.text(Number(oCurText._sText) + starResult.point)
-
-	), starList.length * 1000, { from : 0, to : starList.length - 1, loop : 1}).attach({
-		complete : ->
-			collie.Timer.delay ((oEvent) -> stopPlayMissionResult()), 1000
-	})
+	array = [0, 1, 2, 3];
+	repeatArray 1000, array, (ele) -> console.log "ele = #{ele}"
 
 	new collie.FPSConsole().load();
 	collie.Renderer.addLayer layer
