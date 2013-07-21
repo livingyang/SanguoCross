@@ -1,0 +1,7 @@
+"名称","演技","唱功","口才","气质","性感","智慧","体质","喜感","叛逆","道德","潜力","经验数组","增加气质","增加性感","增加智慧","增加体质","增加喜感","增加叛逆","增加道德","增加潜力"
+"string","number","number","number","number","number","number","number","number","number","number","number","string","number","number","number","number","number","number","number","number"
+"name","acting","singing","eloquence","elegant","sexy","wisdom","physical","chaff","treason","moral","potential","expArray","elegantUp","sexyUp","wisdomUp","physicalUp","chaffUp","treasonUp","moralUp","potentialUp"
+"刘德华",5,5,4,99,100,98,100,98,96,95,100,"0,50,100,150,300,400",1,2,1,2,1,1,2,150
+"张学友",4,6,3,100,97,100,99,99,95,96,100,"0,50,100,150,300,400",1,2,1,2,1,1,2,150
+"黎明",4,5,4,90,92,90,99,90,97,92,100,"0,50,100,150,300,400",1,2,1,2,1,1,2,150
+"郭富城",4,4,6,90,97,100,100,94,94,94,100,"0,50,100,150,300,400",1,2,1,2,1,1,2,150
