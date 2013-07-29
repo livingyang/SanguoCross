@@ -16,7 +16,7 @@ stopPlayMissionResult = () ->
 	collie.Renderer.unload()
 	collie.Timer.removeAll()
 
-playMissionResult = (elParent, totalPoint, starList) ->
+playMissionResult = (elParent, totalPoint) ->
 	collie.ImageManager.add
 		icon : getHolderImage("holder.js/50x50/text:明星") 
 
@@ -47,13 +47,42 @@ playMissionResult = (elParent, totalPoint, starList) ->
 		fontColor : "#000000"
 		).addTo(layer).text(0)
 
-	# collie.Timer.repeat(((oEvent) -> console.log oEvent), 1000, {loop: 1})
-
 	repeatArray = (duration, array, func) ->
 		collie.Timer.repeat ((oEvent) -> func array[oEvent.count - 1]), duration, {loop: array.length}
 
 	array = [0, 1, 2, 3];
-	repeatArray 1000, array, (ele) -> console.log "ele = #{ele}"
+	# repeatArray 1000, array, (ele) -> console.log "ele = #{ele}"
+
+
+	class TimeLineObject
+		constructor: () ->
+			@animeData = []			
+
+		onTimelineComplete: ->
+			if @animeData.length is 0
+				console.log "stop!!"
+			else
+				@createTimeline(@animeData.pop())
+
+		start: (animeData) ->
+			@animeData = animeData
+			@createTimeline(@animeData.pop())
+
+		createTimeline: (data) ->
+			console.log "createTimeline data: #{data}"
+			timeline = collie.Timer.timeline()
+			timeline.add(0, "delay", (->), 1000 * data)
+			timeline.attach {
+				complete: () =>
+					@onTimelineComplete()
+			}
+			timeline
+
+			
+
+	timeline = new TimeLineObject()
+	timeline.start [1, 2, 3, 4]
+	
 
 	new collie.FPSConsole().load();
 	collie.Renderer.addLayer layer
@@ -66,34 +95,8 @@ Template.mission.destroyed = ->
 Template.mission.events "click #start" : ->
 	console.log "start"
 	totalPoint = 100
-	starList = [
-		{
-			point: 10
-			state: 0 # 0 - bad , 1 - normal , 2 - good
-		},
-		{
-			point: 6
-			state: 1 # 0 - bad , 1 - normal , 2 - good
-		},
-		{
-			point: 9
-			state: 2
-		},
-		{
-			point: 18
-			state: 2
-		},
-		{
-			point: 29
-			state: 2
-		},
-		{
-			point: 19
-			state: 2
-		},
-	]
 
 	if isPlayingMission()
 		stopPlayMissionResult()
 	else
-		playMissionResult document.getElementById("fight"), totalPoint, starList
+		playMissionResult document.getElementById("fight"), totalPoint
